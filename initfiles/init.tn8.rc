@@ -42,6 +42,11 @@ on init
     chown system system /sys/power/sysedp/batmon/esr
     chown system system /sys/bus/i2c/devices/1-0040/iio_device/running_mode
 
+on boot
+    #change vm memory parameter
+    write /proc/sys/vm/lowmem_reserve_ratio "128 128"
+
+
 on post-fs
     write /sys/block/mmcblk0/queue/iostats 0
     write /sys/block/mmcblk0/queue/scheduler cfq
@@ -53,6 +58,10 @@ on property:sys.boot_completed=1
     write /sys/block/mmcblk0/queue/read_ahead_kb 512
     write /sys/block/mmcblk0/queue/iostats 1
 
+on property:sys.boot_completed=1
+    chown system system /sys/module/lowmemorykiller/parameters/minfree
+    write /sys/module/lowmemorykiller/parameters/minfree 4096,4864,9984,14848,19968,25088
+  
 on firmware_mounts_complete
     rm /data/misc/wifi/firmware/nvram.txt
     symlink /system/vendor/firmware/nvram_43241.txt /data/misc/wifi/firmware/nvram.txt
