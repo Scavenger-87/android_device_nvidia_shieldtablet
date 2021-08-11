@@ -61,7 +61,7 @@ on property:sys.boot_completed=1
 
 on property:sys.boot_completed=1
     chown system system /sys/module/lowmemorykiller/parameters/minfree
-    write /sys/module/lowmemorykiller/parameters/minfree 5030,10060,15090,20120,25150,30180
+    write /sys/module/lowmemorykiller/parameters/minfree 9728,15090,20120,25150,30180,35210
   
 on firmware_mounts_complete
     rm /data/misc/wifi/firmware/nvram.txt
